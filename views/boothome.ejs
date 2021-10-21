@@ -223,22 +223,22 @@
    </div></li> -->
           
            <% for(let i of COUPON) {%>
-            <li style="display: inline-block; width:30%"><div class="card" style="width:100%; word-wrap: break-word; margin: 4%;">
-                <div class="card-body">
-                    <h4 class="card-title"><%= i.title %></h4>
-                    <h6 class="card-subtitle mb-2 text-muted"><%= i.store %></h6>
-                    <p class="card-text"><%=i.description%></p>
-                    <a href="/main/<%=i._id%>" class="card-link">Card link</a>
-                    <a href="#" class="card-link">Another link</a>
-                </div>
-            </div></li>
+                <li style="display: inline-block; width:30%"><div class="card" style="width:100%; word-wrap: break-word; margin: 4%;">
+                    <div class="card-body">
+                        <h4 class="card-title"><%= i.title %></h4>
+                        <h6 class="card-subtitle mb-2 text-muted"><%= i.store %></h6>
+                        <p class="card-text"><%=i.description%></p>
+                        <a href="/main/<%=i._id%>" class="card-link">Card link</a>
+                        <a href="#" class="card-link">Another link</a>
+                    </div>
+                </div></li>
           <%}%>
 
     </ul>
     </div>
     
-    <div class="jumbotron" style="margin-top:60px; margin-bottom: 0; background-color:dimgrey; border-radius: 0; padding-bottom: 0.1%; padding-top: 1%">
-        <p style="text-align: center; color: white; ;">Copyright2021@<strong> Team Bihu-Bihu</strong></p>
+    <div class="jumbotron" style="margin-top:60px; margin-bottom: 0; background-color:dimgrey; border-radius: 0; padding-bottom: 0.1%; padding-top: 1% ; position: fixed; bottom: 0; width: 100%;">
+        <p style="text-align: center; color: white; ">Copyright2021@<strong> Team Bihu-Bihu</strong></p>
     </div>
 	<!-- Coding End -->
 

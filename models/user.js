@@ -24,8 +24,14 @@ const UserSchema = new mongoose.Schema({
     },
     coins : {
         type : Number,
-        default : 50
-    }
+        default : 1000
+    },
+    COUPONS : [
+        {
+            type : mongoose.Schema.Types.ObjectId,
+            ref : 'coupon'
+        }
+    ]
 }) ;
 const User = mongoose.model('User' , UserSchema) ;
 module.exports = User ;
