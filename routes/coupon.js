@@ -13,11 +13,13 @@ routes.post('/create-coupon' , async (req , res) => {
         description : req.body.description,
         cardLimit : req.body.cardLimit,
         couponCode : req.body.couponCode,
-        user : res.locals.user._id
+        user : res.locals.user._id ,
+        isFiltered : true 
     })
    obj.save() ;
    res.locals.user.coupen_hosted = res.locals.user.coupen_hosted + 1 ;
    res.locals.user.save() ;
+   req.flash('success' , 'Coupon is added successfully') ;
    return res.redirect('back') ;
 }) ;
 routes.get('/main/:id' , async (req , res) => {
@@ -45,10 +47,27 @@ routes.get('/buy-coupon/:id' , async (req , res) => {
     
 
 
-
-
-
-
-
+routes.post('/filter' , async (req , res) => {
+    console.log(req.body) ;
+    for await(var i of coupon.find()) {
+        // console.log(i.store) ;
+        // console.log(i.isFiltered) ;
+        
+        for await (var j of req.body.companyName) {
+            if(i.store !== j) {
+                i.isFiltered = false ;
+                i.save() ;
+                console.log(j) ;
+            }else{
+               i.isFiltered = true ;
+               i.save() ;
+            }
+        }
+        // console.log(i.store) ;
+        // console.log(i.isFiltered) ;
+      }
+      res.redirect('back') ;
+    
+})
 
 module.exports = routes ;

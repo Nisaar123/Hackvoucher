@@ -9,7 +9,9 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
 	<title>Bootstrap 4 Minimal Template</title>
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/noty/3.1.4/noty.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/noty/3.1.4/noty.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 	<link rel="shortcut icon" href="" type="image/x-icon">
 	<link rel="apple-touch-icon" href="">
 
@@ -153,35 +155,35 @@
         </ul>
     </div>
     <div style="width:15%;  margin-left: 1.5%; margin-top: 1%; word-wrap:break-word; display: inline-block;">
-        <form>
+        <form action="/filter" method="post">
             <div class="avlblstores" style="margin-bottom: 3%;">
                 <h5 style="color: darkorange;">Available Stores</h5>
                 <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-                    <label class="form-check-label" for="defaultCheck1">Reliance Ajio</label>
+                    <input name="companyName" class="form-check-input" type="checkbox" value="Reliance" id="defaultCheck1">
+                    <label class="form-check-label" for="defaultCheck1">Reliance</label>
                 </div>
                 <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck2">
+                    <input name="companyName"  class="form-check-input" type="checkbox" value="flipkart" id="defaultCheck2">
                     <label class="form-check-label" for="defaultCheck2">Flipkart</label>    
                 </div>
                 <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck3">
+                    <input name="companyName" class="form-check-input" type="checkbox" value="amazon" id="defaultCheck3">
                     <label class="form-check-label" for="defaultCheck3">Amazon</label>
                 </div>
                 <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck3">
+                    <input name="companyName" class="form-check-input" type="checkbox" value="ShopClues" id="defaultCheck3">
                     <label class="form-check-label" for="defaultCheck3">ShopClues</label>
                 </div>
                 <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck3">
+                    <input name="companyName" class="form-check-input" type="checkbox" value="Snapdeal" id="defaultCheck3">
                     <label class="form-check-label" for="defaultCheck3">Snapdeal</label>
                 </div>
                 <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck3">
+                    <input name="companyName" class="form-check-input" type="checkbox" value="Citykart" id="defaultCheck3">
                     <label class="form-check-label" for="defaultCheck3">Citykart</label>
                 </div>
             </div>
-            <div class="prcntgdis" style="margin-bottom: 3%;">
+            <!-- <div class="prcntgdis" style="margin-bottom: 3%;">
                 <h5 style="color: darkorange;">Choose %ge off</h5>
                 <div class="form-check">
                     <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
@@ -207,7 +209,8 @@
                     <input class="form-check-input" type="checkbox" value="" id="defaultCheck3">
                     <label class="form-check-label" for="defaultCheck3">50 % and above</label>
                 </div>
-            </div>
+            </div>  -->
+            <button type="submit" class="btn btn-secondary" style="width: 100px; text-align: center; background-color: darkorange; height: 30px;">Filter</button>
         </form>
     </div>
     <div style="width: 83%; float: right">
@@ -237,7 +240,7 @@
     </ul>
     </div>
     
-    <div class="jumbotron" style="margin-top:60px; margin-bottom: 0; background-color:dimgrey; border-radius: 0; padding-bottom: 0.1%; padding-top: 1% ; position: fixed; bottom: 0; width: 100%;">
+    <div class="jumbotron" style="margin-top:60px; margin-bottom: 0; background-color:dimgrey; border-radius: 0; padding-bottom: 0.1%; padding-top: 1% ;">
         <p style="text-align: center; color: white; ">Copyright2021@<strong> Team Bihu-Bihu</strong></p>
     </div>
 	<!-- Coding End -->
@@ -246,5 +249,26 @@
 	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <script>
+        <% if(flash.success && flash.success.length > 0) {%>
+            new Noty({
+            theme : 'relax',
+            text: '<%= flash.success %>',
+            type : 'success',
+            layout : 'topRight',
+            timeout : 1500
+         }).show();
+        <%} %>
+        <% if(flash.error && flash.error.length > 0) {%>
+            new Noty({
+            theme : 'relax',
+            text: '<%= flash.error %>',
+            type : 'error',
+            layout : 'topRight',
+            timeout : 1500
+         }).show();
+        <%} %>
+    </script>
+    <script src="/js/coupon.js"></script>
 </body>
 </html>

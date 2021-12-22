@@ -29,6 +29,10 @@ const couponSchema = new mongoose.Schema({
     isPurchaged : {
         type : Boolean ,
         default : false
+    },
+    isFiltered : {
+        type : Boolean,
+        required : true 
     }
 })
 

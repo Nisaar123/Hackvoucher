@@ -15,6 +15,8 @@ const passport = require('passport') ;
 const passportLocal = require('./config/passport-local-strategy');
 
 const MongoStore = require('connect-mongo') ;
+const flash = require('connect-flash') ;
+const customWere = require('./config/middlewere');
 
 app.set('view engine' , 'ejs') ;
 app.set('views' , './views') ;
@@ -37,6 +39,8 @@ app.use(passport.initialize()) ;
 app.use(passport.session()) ; 
 
 app.use(passport.setAuthenticatedUser) ;
+app.use(flash()) ;
+app.use(customWere.setFlash);
 
 app.use('/' , require('./routes/home')) ;
 app.use('/' , require('./routes/coupon')) ;
