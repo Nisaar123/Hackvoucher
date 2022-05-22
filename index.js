@@ -1,6 +1,6 @@
 const express = require('express') ;
 const cookieParser = require('cookie-parser') ;
-const port = Process.env.PORT || 4000 ;
+const port = process.env.PORT || 4000 ;
 const app = express() ;
 
 const routes = require('./routes/home') ;
