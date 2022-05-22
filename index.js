@@ -7,6 +7,7 @@ const routes = require('./routes/home') ;
 app.use(express.urlencoded()) ;
 app.use(cookieParser()) ; 
 app.use(express.static('assets'))
+const multer = require('multer');
 
 const db = require('./config/mongoose') ;
 
@@ -15,6 +16,16 @@ const passport = require('passport') ;
 const passportLocal = require('./config/passport-local-strategy');
 
 const MongoStore = require('connect-mongo') ;
+const flash = require('connect-flash') ;
+const customWere = require('./config/middlewere');
+const storage = multer.diskStorage({
+    destination: function(req, file, callback) {
+      callback(null, '/src/my-images');
+    },
+    filename: function (req, file, callback) {
+      callback(null, file.fieldname);
+    }
+  });
 
 app.set('view engine' , 'ejs') ;
 app.set('views' , './views') ;
@@ -37,6 +48,8 @@ app.use(passport.initialize()) ;
 app.use(passport.session()) ; 
 
 app.use(passport.setAuthenticatedUser) ;
+app.use(flash()) ;
+app.use(customWere.setFlash);
 
 app.use('/' , require('./routes/home')) ;
 app.use('/' , require('./routes/coupon')) ;

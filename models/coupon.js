@@ -14,7 +14,7 @@ const couponSchema = new mongoose.Schema({
         type : String,
         required : true
     },
-    cartLimit : {
+    cardLimit : {
         type : Number,
         required : true 
     },
@@ -24,7 +24,15 @@ const couponSchema = new mongoose.Schema({
     },
     user : {
         type : mongoose.Schema.Types.ObjectId,
-        ref : 'User'
+        ref : 'user'
+    },
+    isPurchaged : {
+        type : Boolean ,
+        default : false
+    },
+    isFiltered : {
+        type : Boolean,
+        required : true 
     }
 })
 

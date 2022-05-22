@@ -24,7 +24,17 @@ const UserSchema = new mongoose.Schema({
     },
     coins : {
         type : Number,
-        default : 50
+        default : 1000
+    },
+    COUPONS : [
+        {
+            type : mongoose.Schema.Types.ObjectId,
+            ref : 'coupon'
+        }
+    ],
+    is_profile_pic_uploaded : {
+        type : Boolean,
+        default : false
     }
 }) ;
 const User = mongoose.model('User' , UserSchema) ;

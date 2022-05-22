@@ -9,7 +9,9 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
 	<title>Bootstrap 4 Minimal Template</title>
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/noty/3.1.4/noty.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/noty/3.1.4/noty.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 	<link rel="shortcut icon" href="" type="image/x-icon">
 	<link rel="apple-touch-icon" href="">
 
@@ -78,10 +80,12 @@
    </nav>
     <div class="jumbotron jumbotron-fluid" style="margin-bottom: 0;">
 		<div class="container">
-			<h1 class="display-3" style="color: darkorange; text-align: center; margin-top: 35px;">Hello, world!</h1>
-			<p class="lead" style="text-align: center;">This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.This is a simple hero unit, a simple jumbotrtcvuubyyvyvvurvrrvruvuuyuvuyvtuvtutuvuttu jon-style component for calling extra attention to featured con-style component for calling extra attention to featured content or information.This is a simple hero unit, a simple jumbotron-style component for calling.</p>
+			<h1 class="display-3" style="color: darkorange; text-align: center; margin-top: 35px;">Hello, folks!</h1>
+			<p class="lead" style="text-align: center;">It is an online market place with the largest user posted inventory of un- used gift vouchers/ cards. It connects the Buyers and Sellers, allows them to negotiate and arrive at a workable price which works for both the buyer and seller. Hence it will be the cheapest for the buyer and mostly a definite sale for the Seller. 
+                In this project we are making voucher hosting platform in which we get the some vouchers from different e-commerce website like google pay, amazon pay, bhim upi etc which are when we redeem, some come out blank and some of no use of us .If we have got the coupon, which is our waste coupon/that is of no use . So basically, In this Project which we are building, voucher hosting platform we can sell blank vouchers there. and can purchase useful vouchers like discount coupons, cashback coupons etc 
+                .This is the key of the project for the purpose, we also get some bank discounts, coupons from shopping websites like myntra, flipkart, amazon. Some trading account coupons that are no use of us, but can be useful to others. Our Platform will identify blank vouchers, or non-usable to us and we can use them for our profit to earn money.</p>
 			<hr class="my-4">
-			<p style="text-align: center;">It uses utility classes for typography and spacing to space content out within the larger container.</p>
+			<p style="text-align: center;"></p>
 			<p class="lead" style="margin-left: 39%;">
 				<a class="btn btn-primary btn-lg" href="#" role="button" style="background-color: darkorange; border: none;">Know about Developers</a>
 			</p>
@@ -94,23 +98,23 @@
                 <div class="card" style="border: none;">
                     <div class="card-body">
                         <h2 class="card-title" style="text-align: center; color: darkorange;">Registered Users</h2>
-                        <h3 class="card-title" style="text-align: center; ">917892799</h3>
+                        <h3 class="card-title" style="text-align: center; "> <%= userSize %> </h3>
                     </div>
                 </div>
             </li>
             <li style="display: inline-block; width: 30%;">
                 <div class="card" style="border: none;">
                     <div class="card-body">
-                        <h2 class="card-title" style="text-align: center; color: darkorange;">Registered Users</h2>
-                        <h3 class="card-title" style="text-align: center; ">917892799</h3>
+                        <h2 class="card-title" style="text-align: center; color: darkorange;">Available Coupons</h2>
+                        <h3 class="card-title" style="text-align: center; "> <%=  couponCount %></h3>
                     </div>
                 </div>
             </li>
             <li style="display: inline-block; width: 30%;">
                 <div class="card" style="border: none;">
                     <div class="card-body">
-                        <h2 class="card-title" style="text-align: center; color: darkorange;">Registered Users</h2>
-                        <h3 class="card-title" style="text-align: center; ">917892799</h3>
+                        <h2 class="card-title" style="text-align: center; color: darkorange;">Total Exchange</h2>
+                        <h3 class="card-title" style="text-align: center; "> <%= coupoExchange %></h3>
                     </div>
                 </div>
             </li>
@@ -153,35 +157,35 @@
         </ul>
     </div>
     <div style="width:15%;  margin-left: 1.5%; margin-top: 1%; word-wrap:break-word; display: inline-block;">
-        <form>
+        <form action="/filter" method="post">
             <div class="avlblstores" style="margin-bottom: 3%;">
                 <h5 style="color: darkorange;">Available Stores</h5>
                 <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-                    <label class="form-check-label" for="defaultCheck1">Reliance Ajio</label>
+                    <input name="companyName" class="form-check-input" type="checkbox" value="Reliance" id="defaultCheck1">
+                    <label class="form-check-label" for="defaultCheck1">Reliance</label>
                 </div>
                 <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck2">
+                    <input name="companyName"  class="form-check-input" type="checkbox" value="flipkart" id="defaultCheck2">
                     <label class="form-check-label" for="defaultCheck2">Flipkart</label>    
                 </div>
                 <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck3">
+                    <input name="companyName" class="form-check-input" type="checkbox" value="amazon" id="defaultCheck3">
                     <label class="form-check-label" for="defaultCheck3">Amazon</label>
                 </div>
                 <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck3">
+                    <input name="companyName" class="form-check-input" type="checkbox" value="ShopClues" id="defaultCheck3">
                     <label class="form-check-label" for="defaultCheck3">ShopClues</label>
                 </div>
                 <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck3">
+                    <input name="companyName" class="form-check-input" type="checkbox" value="Snapdeal" id="defaultCheck3">
                     <label class="form-check-label" for="defaultCheck3">Snapdeal</label>
                 </div>
                 <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck3">
+                    <input name="companyName" class="form-check-input" type="checkbox" value="Citykart" id="defaultCheck3">
                     <label class="form-check-label" for="defaultCheck3">Citykart</label>
                 </div>
             </div>
-            <div class="prcntgdis" style="margin-bottom: 3%;">
+            <!-- <div class="prcntgdis" style="margin-bottom: 3%;">
                 <h5 style="color: darkorange;">Choose %ge off</h5>
                 <div class="form-check">
                     <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
@@ -207,7 +211,8 @@
                     <input class="form-check-input" type="checkbox" value="" id="defaultCheck3">
                     <label class="form-check-label" for="defaultCheck3">50 % and above</label>
                 </div>
-            </div>
+            </div>  -->
+            <button type="submit" class="btn btn-secondary" style="width: 100px; text-align: center; background-color: darkorange; height: 30px;">Filter</button>
         </form>
     </div>
     <div style="width: 83%; float: right">
@@ -222,29 +227,69 @@
        </div>
    </div></li> -->
           
-           <% for(let i of COUPON) {%>
-            <li style="display: inline-block; width:30%"><div class="card" style="width:100%; word-wrap: break-word; margin: 4%;">
-                <div class="card-body">
-                    <h4 class="card-title"><%= i.title %></h4>
-                    <h6 class="card-subtitle mb-2 text-muted"><%= i.store %></h6>
-                    <p class="card-text"><%=i.description%></p>
-                    <a href="/main/<%=i._id%>" class="card-link">Card link</a>
-                    <a href="#" class="card-link">Another link</a>
-                </div>
-            </div></li>
-          <%}%>
+            <% if(!filtred) {%>
+                <% for(let i of COUPON) {%>
+                    <li style="display: inline-block; width:30%"><div class="card" style="width:100%; word-wrap: break-word; margin: 4%;">
+                        <div class="card-body" style="background-color: rgb(238, 135, 71); border-radius: 5px;">
+                            <h4 class="card-title" style="color: white;"><%= i.title %></h4>
+                            <h6 class="card-subtitle mb-2 text-muted"><%= i.store %></h6>
+                            <p class="card-text"><%=i.description%></p>
+                            <a href="/main/<%=i._id%>" class="card-link" style="color: rgb(219, 213, 213);" >Card link</a>
+                            <a href="#" class="card-link" style="color: rgb(219, 213, 213);">Another link</a>
+                        </div>
+                    </div></li>
+              <%}%>
+            <%} else {%>
+                 <%  for(let i of COUPON) {%>
+                    <%   for(let j of filteredCompany) { %>
+                        <%   if(i.store.toLowerCase() == j.toLowerCase()) { %>
+                            <li style="display: inline-block; width:30%"><div class="card" style="width:100%; word-wrap: break-word; margin: 4%;">
+                                <div class="card-body" style="background-color: rgb(238, 135, 71); border-radius: 5px;">
+                                    <h4 class="card-title" style="color: white;"><%= i.title %></h4>
+                                    <h6 class="card-subtitle mb-2 text-muted"><%= i.store %></h6>
+                                    <p class="card-text"><%=i.description%></p>
+                                    <a href="/main/<%=i._id%>" class="card-link" style="color: rgb(219, 213, 213);" >Card link</a>
+                                    <a href="#" class="card-link" style="color: rgb(219, 213, 213);">Another link</a>
+                                </div>
+                            </div></li>
+                           <%}%>
+                      <% } %>
+                  <% } %>
+            <%}%>
+
 
     </ul>
     </div>
     
-    <div class="jumbotron" style="margin-top:60px; margin-bottom: 0; background-color:dimgrey; border-radius: 0; padding-bottom: 0.1%; padding-top: 1%">
-        <p style="text-align: center; color: white; ;">Copyright2021@<strong> Team Bihu-Bihu</strong></p>
-    </div>
+    <!-- <div class="jumbotron" style="margin-top:60px; margin-bottom: 0; background-color:dimgrey; border-radius: 0; padding-bottom: 0.1%; padding-top: 1% ;">
+        <p style="text-align: center; color: white; ">Copyright2021@<strong> Team Bihu-Bihu</strong></p>
+    </div> -->
 	<!-- Coding End -->
 
 	<!-- jQuery first, then Popper.js, then Bootstrap JS -->
 	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <script>
+        <% if(flash.success && flash.success.length > 0) {%>
+            new Noty({
+            theme : 'relax',
+            text: '<%= flash.success %>',
+            type : 'success',
+            layout : 'topRight',
+            timeout : 1500
+         }).show();
+        <%} %>
+        <% if(flash.error && flash.error.length > 0) {%>
+            new Noty({
+            theme : 'relax',
+            text: '<%= flash.error %>',
+            type : 'error',
+            layout : 'topRight',
+            timeout : 1500
+         }).show();
+        <%} %>
+    </script>
+    <script src="/js/coupon.js"></script>
 </body>
 </html>

@@ -4,31 +4,73 @@ console.log('Routes has added') ;
 const passport = require('../config/passport-local-strategy') ;
 const User = require('../models/user') ;
 const coupon = require('../models/coupon') ;
+const { deleteOne } = require('../models/user');
 
-routes.post('/create-coupon' , (req , res) => {
-    var obj = new coupon({
+routes.post('/create-coupon' , async (req , res) => {
+    var obj = await new coupon({
         title : req.body.title,
         store : req.body.store,
         description : req.body.description,
-        cartLimit : req.body.cartLimit,
+        cardLimit : req.body.cardLimit,
         couponCode : req.body.couponCode,
-        user : res.locals.user._id
+        user : res.locals.user._id ,
+        isFiltered : true 
     })
    obj.save() ;
-   console.log(res.locals.user) ;
-   return res.redirect('back') ;
+   res.locals.user.coupen_hosted = res.locals.user.coupen_hosted + 1 ;
+   res.locals.user.save() ;
+   req.flash('success' , 'Coupon is added successfully') ;
+   return res.redirect('/home') ;
 }) ;
-routes.get('/main/:id' , (req , res) => {
-    console.log(req.params) ;
-    return res.render('bootmain') ;
+routes.get('/main/:id' , async (req , res) => {
+    let COUPON = await coupon.findById(req.params.id)
+    res.render('bootmain' , {
+        COUPON : COUPON,
+        link : "www." + COUPON.store + ".com"
+    }) ;
+}) ;
+
+
+routes.get('/buy-coupon/:id' , async (req , res) => {
+      let COUPON = await coupon.findById(req.params.id);
+        res.locals.user.COUPONS.push(COUPON) ;
+        res.locals.user.coins = res.locals.user.coins - COUPON.cardLimit ;
+        res.locals.user.coupen_buyed = res.locals.user.coupen_buyed + 1 ;
+        COUPON.isPurchaged = true ; 
+        let user = await User.findById(COUPON.user) ;
+        user.coins = user.coins + COUPON.cardLimit ;
+        user.save() ;
+        COUPON.save();
+        res.locals.user.save() ;
+       return res.redirect('/home') ;
+   }) ;
+    
+
+
+routes.post('/filter' , async (req , res) => {
+    console.log(req.body.companyName)
+    let data = await coupon.find({isPurchaged: false , isFiltered : true}) ;
+    let userSize = await (await User.find()).length;
+    var filter;
+    var x = [];
+    var y = req.body.companyName;
+    if(!Array.isArray(y)) {
+        x.push(y);
+        filter = x;
+    } else {
+        filter = req.body.companyName
+    }
+    console.log(filter);
+    res.render('boothome', {
+        isAuthenticated : req.isAuthenticated(),
+        COUPON : data,
+        userSize : userSize,
+        couponCount: await (await coupon.find({isPurchaged: false})).length,
+        coupoExchange: await (await coupon.find()).length,
+        filteredCompany: filter,
+        filtred: true,
+    }) ;
 })
-
-
-
-
-
-
-
 
 
 module.exports = routes ;
