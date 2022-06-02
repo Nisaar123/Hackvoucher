@@ -79,7 +79,6 @@ for(let i = 0; i < coupon.length; i++) {
         totalPendingCoupons : totalPendingCoupons,
         totalVerifiedCoupons : coupon.length - totalPendingCoupons,
         totalAdmins : admins.length, 
-        search : search,
         isSearched: false
     }) ;
 })

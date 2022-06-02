@@ -13,7 +13,7 @@ routes.get('/home' , async (req, res) => {
 let data = await coupon.find({isPurchaged: false , isFiltered : true}) ;
 let userSize = await (await User.find()).length;
 var totalPendingCoupons = 0;
-for(let i = 0; i < coupon.length; i++) {
+for(let i = 0; i < data.length; i++) {
     if(data[i].isVerified) {
         totalPendingCoupons = totalPendingCoupons + 1;
     }
@@ -24,7 +24,7 @@ console.log(userSize);
         COUPON : data,
         matchedCoupon: [],
         userSize : userSize,
-        couponCount: await (await coupon.find({isPurchaged: false})).length,
+        couponCount: data.length,
         coupoExchange: await (await coupon.find({isPurchaged: true})).length,
         filtred: false,
         user : res.locals.user,
