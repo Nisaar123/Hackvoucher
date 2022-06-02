@@ -14,7 +14,7 @@ let data = await coupon.find({isPurchaged: false , isFiltered : true}) ;
 let userSize = await (await User.find()).length;
 var totalPendingCoupons = 0;
 for(let i = 0; i < data.length; i++) {
-    if(data[i].isVerified) {
+    if(!data[i].isVerified) {
         totalPendingCoupons = totalPendingCoupons + 1;
     }
 }
@@ -29,7 +29,7 @@ console.log(userSize);
         filtred: false,
         user : res.locals.user,
         totalPendingCoupons : totalPendingCoupons,
-        totalVerifiedCoupons : coupon.length - totalPendingCoupons,
+        totalVerifiedCoupons : data.length - totalPendingCoupons,
         totalAdmins : admins.length,  
         isSearched : false
     }) ;
@@ -101,8 +101,8 @@ routes.get('/profile' , async (req , res) => {
     }
     data = await coupon.find({isPurchaged: false , isFiltered : true})
     var totalPendingCoupons = 0;
-   for(let i = 0; i < coupon.length; i++) {
-    if(data[i].isVerified) {
+   for(let i = 0; i < data.length; i++) {
+    if(!data[i].isVerified) {
         totalPendingCoupons = totalPendingCoupons + 1;
     }
    }
@@ -111,7 +111,7 @@ routes.get('/profile' , async (req , res) => {
         x : x,
         coupon : data,
         totalPendingCoupons : totalPendingCoupons,
-        totalVerifiedCoupons : coupon.length - totalPendingCoupons
+        totalVerifiedCoupons : data.length - totalPendingCoupons
     }) ;
 })
 routes.get('/add-voucher' , passport.checkAuthentication , (req , res) => {
