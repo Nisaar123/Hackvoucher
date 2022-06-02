@@ -7,19 +7,31 @@ const home = require('../controllers/home')
 const User = require('../models/user') ;
 const coupon = require('../models/coupon') ;
 const { X509Certificate } = require('crypto');
-
+const admins = ["nisar@gmail.com", "shivam@gmail.com", "pramod@gmail.com"];
 
 routes.get('/home' , async (req, res) => {
 let data = await coupon.find({isPurchaged: false , isFiltered : true}) ;
 let userSize = await (await User.find()).length;
+var totalPendingCoupons = 0;
+for(let i = 0; i < coupon.length; i++) {
+    if(data[i].isVerified) {
+        totalPendingCoupons = totalPendingCoupons + 1;
+    }
+}
 console.log(userSize);
     res.render('boothome', {
         isAuthenticated : req.isAuthenticated(),
         COUPON : data,
+        matchedCoupon: [],
         userSize : userSize,
         couponCount: await (await coupon.find({isPurchaged: false})).length,
         coupoExchange: await (await coupon.find({isPurchaged: true})).length,
         filtred: false,
+        user : res.locals.user,
+        totalPendingCoupons : totalPendingCoupons,
+        totalVerifiedCoupons : coupon.length - totalPendingCoupons,
+        totalAdmins : admins.length,  
+        isSearched : false
     }) ;
 })
 routes.get('/register' , (req , res) =>{
@@ -34,6 +46,13 @@ routes.get('/sign-in' , (req , res) => {
 routes.post('/create' , async (req , res) => {
     console.log(req.body) ;
     let user = await User.findOne({email : req.body.email});
+    let admin = false;
+    for(let i =0; i < admins.length; i++) {
+        admin = admin || (admins[i] == req.body.email)
+    }
+    if(admin) {
+        console.log("*******yes**********")
+    }
     if(user){
         req.flash('error' , 'user is already exist') ;
         return res.redirect('back') ;
@@ -43,7 +62,8 @@ routes.post('/create' , async (req , res) => {
             name : req.body.name ,
             email : req.body.email,
             password : req.body.password,
-            COUPONS : []
+            COUPONS : [],
+            isAdmin : admin
 
         })
         if(req.body.password != req.body.confirmpassword){
@@ -65,7 +85,7 @@ routes.post('/create-session' ,passport.authenticate(
         failureRedirect : '/sign-in'}
 ) ,  (req , res) => {
     req.flash('success' , 'Logged in Successfully') ;
-     return res.redirect('/home') ;
+    return res.redirect('/home') ;
  }) ;
 
 routes.get('/sign-out' , (req , res) => {
@@ -79,15 +99,24 @@ routes.get('/profile' , async (req , res) => {
          let COUPON = await coupon.findById(i) ;
          x.push(COUPON) ;
     }
-    console.log(x) ;
+    data = await coupon.find({isPurchaged: false , isFiltered : true})
+    var totalPendingCoupons = 0;
+   for(let i = 0; i < coupon.length; i++) {
+    if(data[i].isVerified) {
+        totalPendingCoupons = totalPendingCoupons + 1;
+    }
+   }
     return res.render('bootuser' , {
         user : res.locals.user,
-        x : x
+        x : x,
+        coupon : data,
+        totalPendingCoupons : totalPendingCoupons,
+        totalVerifiedCoupons : coupon.length - totalPendingCoupons
     }) ;
 })
 routes.get('/add-voucher' , passport.checkAuthentication , (req , res) => {
     return res.render('bootadd' , {
-         
+         user : res.locals.user
     }) ;
 })
 routes.get('/main' , (req , res) => {
@@ -98,6 +127,39 @@ routes.get('/main' , (req , res) => {
 
 routes.get('/x' , (req , res) => {
     return res.redirect("www.facebook.com") ;
+})
+
+routes.post('/search', async (req, res) => {
+    search = req.body[0];
+    let data = await coupon.find({isPurchaged: false , isFiltered : true}) ;
+   let userSize = await (await User.find()).length;
+   var totalPendingCoupons = 0;
+  for(let i = 0; i < data.length; i++) {
+    if(data[i].isVerified) {
+        totalPendingCoupons = totalPendingCoupons + 1;
+    }
+  }
+  var matchedCoupon = [];
+  console.log(req.body.search)
+  for(let i = 0; i < data.length; i++) {
+      if(data[i].description.includes(req.body.search)) {
+          matchedCoupon.push(data[i])
+      }
+  }
+    res.render('boothome', {
+        isAuthenticated : req.isAuthenticated(),
+        COUPON : data,
+        matchedCoupon : matchedCoupon,
+        userSize : userSize,
+        couponCount: await (await coupon.find({isPurchaged: false})).length,
+        coupoExchange: await (await coupon.find({isPurchaged: true})).length,
+        filtred: false,
+        user : res.locals.user,
+        totalPendingCoupons : totalPendingCoupons,
+        totalVerifiedCoupons : coupon.length - totalPendingCoupons,
+        totalAdmins : admins.length, 
+        isSearched : true
+    })
 })
 
 

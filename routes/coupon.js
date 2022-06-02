@@ -5,7 +5,7 @@ const passport = require('../config/passport-local-strategy') ;
 const User = require('../models/user') ;
 const coupon = require('../models/coupon') ;
 const { deleteOne } = require('../models/user');
-
+const admins = ["nisar@gmail.com", "shivam@gmail.com", "pramod@gmail.com"];
 routes.post('/create-coupon' , async (req , res) => {
     var obj = await new coupon({
         title : req.body.title,
@@ -19,7 +19,7 @@ routes.post('/create-coupon' , async (req , res) => {
    obj.save() ;
    res.locals.user.coupen_hosted = res.locals.user.coupen_hosted + 1 ;
    res.locals.user.save() ;
-   req.flash('success' , 'Coupon is added successfully') ;
+   req.flash('success' , 'Coupon sent to admins for varification') ;
    return res.redirect('/home') ;
 }) ;
 routes.get('/main/:id' , async (req , res) => {
@@ -48,8 +48,14 @@ routes.get('/buy-coupon/:id' , async (req , res) => {
 
 
 routes.post('/filter' , async (req , res) => {
-    console.log(req.body.companyName)
     let data = await coupon.find({isPurchaged: false , isFiltered : true}) ;
+    var totalPendingCoupons = 0;
+for(let i = 0; i < coupon.length; i++) {
+    if(data[i].isVerified) {
+        totalPendingCoupons = totalPendingCoupons + 1;
+    }
+}
+    console.log(req.body.companyName)
     let userSize = await (await User.find()).length;
     var filter;
     var x = [];
@@ -69,7 +75,20 @@ routes.post('/filter' , async (req , res) => {
         coupoExchange: await (await coupon.find()).length,
         filteredCompany: filter,
         filtred: true,
+        user : res.locals.user,
+        totalPendingCoupons : totalPendingCoupons,
+        totalVerifiedCoupons : coupon.length - totalPendingCoupons,
+        totalAdmins : admins.length, 
+        search : search,
+        isSearched: false
     }) ;
+})
+
+routes.get('/verify/:id', async(req, res) => {
+    let COUPON = await coupon.findById(req.params.id);
+    COUPON.isVerified = true;
+    COUPON.save();
+    res.redirect('back')
 })
 
 

@@ -55,9 +55,15 @@
                <li class="nav-item active">
                   <a class="nav-link" href="/home" style="color: darkorange">Home<span class="sr-only">(current)</span></a>
                </li>
-               <li class="nav-item">
-                  <a class="nav-link" href="/profile" style="color: darkorange">profile</a>
-               </li>
+               <%if(user.isAdmin) {%>
+                <li class="nav-item">
+                    <a class="nav-link" href="/profile" style="color: darkorange">pending coupons</a>
+                 </li>
+            <%} else {%>
+                <li class="nav-item">
+                    <a class="nav-link" href="/profile" style="color: darkorange">profile</a>
+                 </li>
+            <%}%>
                <li class="nav-item">
                   <a class="nav-link" href="/sign-out" style="color: darkorange">signOut</a>
                </li>
@@ -94,10 +100,6 @@
             </form>
 		</div>
 	</div>
-    <div class="jumbotron" style="margin-bottom: 0; background-color:dimgrey; border-radius: 0; padding-bottom: 0.1%; padding-top: 1%">
-        <p style="text-align: center; color: white;">Copyright2020@<strong> Team Bihu-Bihu</strong></p>
-        
-    </div>
 	<!-- Coding End -->
 
 	<!-- jQuery first, then Popper.js, then Bootstrap JS -->

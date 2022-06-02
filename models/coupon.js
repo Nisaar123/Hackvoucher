@@ -33,6 +33,10 @@ const couponSchema = new mongoose.Schema({
     isFiltered : {
         type : Boolean,
         required : true 
+    }, 
+    isVerified : {
+        type : Boolean,
+        default : false
     }
 })
 

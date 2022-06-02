@@ -55,9 +55,6 @@
                <li class="nav-item active">
                   <a class="nav-link" href="/home" style="color: darkorange">Home<span class="sr-only">(current)</span></a>
                </li>
-               <li class="nav-item">
-                  <a class="nav-link" href="/add-voucher" style="color: darkorange">Add Voucher</a>
-               </li>
                <% if(isAuthenticated === false) {%>
                 <li class="nav-item">
                     <a class="nav-link" href="/register" style="color: darkorange">Register</a>
@@ -66,9 +63,20 @@
                     <a class="nav-link" href="/sign-in" style="color: darkorange">Login</a>
                  </li>
             <%}else {%>
-                <li class="nav-item">
-                    <a class="nav-link" href="/profile" style="color: darkorange">profile</a>
-                 </li>
+                <%if(!user.isAdmin) {%>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/add-voucher" style="color: darkorange">Add Voucher</a>
+                     </li>
+                   <%}%>
+                <%if(user.isAdmin) {%>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/profile" style="color: darkorange">pending coupons</a>
+                     </li>
+                <%} else {%>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/profile" style="color: darkorange">profile</a>
+                     </li>
+                <%}%>
                 <li class="nav-item">
                     <a class="nav-link" href="/sign-out" style="color: darkorange">signOut</a>
                  </li>
@@ -80,8 +88,16 @@
    </nav>
     <div class="jumbotron jumbotron-fluid" style="margin-bottom: 0;">
 		<div class="container">
-			<h1 class="display-3" style="color: darkorange; text-align: center; margin-top: 35px;">Hello, folks!</h1>
-			<p class="lead" style="text-align: center;">It is an online market place with the largest user posted inventory of un- used gift vouchers/ cards. It connects the Buyers and Sellers, allows them to negotiate and arrive at a workable price which works for both the buyer and seller. Hence it will be the cheapest for the buyer and mostly a definite sale for the Seller. 
+			<%if(isAuthenticated) {%>
+                <%if(user.isAdmin) {%>
+                    <h1 class="display-3" style="color: darkorange; text-align: center; margin-top: 35px;">Hey, <%= user.name.charAt(0).toUpperCase() + user.name.slice(1) %></h1>
+                <%} else {%>
+                    <h1 class="display-3" style="color: darkorange; text-align: center; margin-top: 35px;">Hello, folks!</h1>
+                <%}%>
+            <%} else {%>
+                <h1 class="display-3" style="color: darkorange; text-align: center; margin-top: 35px;">Hello, folks!</h1>
+            <%}%>
+			<p class="lead" style="text-align:justify;">It is an online market place with the largest user posted inventory of un- used gift vouchers/ cards. It connects the Buyers and Sellers, allows them to negotiate and arrive at a workable price which works for both the buyer and seller. Hence it will be the cheapest for the buyer and mostly a definite sale for the Seller. 
                 In this project we are making voucher hosting platform in which we get the some vouchers from different e-commerce website like google pay, amazon pay, bhim upi etc which are when we redeem, some come out blank and some of no use of us .If we have got the coupon, which is our waste coupon/that is of no use . So basically, In this Project which we are building, voucher hosting platform we can sell blank vouchers there. and can purchase useful vouchers like discount coupons, cashback coupons etc 
                 .This is the key of the project for the purpose, we also get some bank discounts, coupons from shopping websites like myntra, flipkart, amazon. Some trading account coupons that are no use of us, but can be useful to others. Our Platform will identify blank vouchers, or non-usable to us and we can use them for our profit to earn money.</p>
 			<hr class="my-4">
@@ -93,32 +109,61 @@
 	</div>
     <div class="jumbotron" style="padding-top: 4%; padding-bottom: 1.3%; background-color: white; margin-bottom: 0; border-radius: 0; margin-top: 0; padding-left: 8%;">
         <div class="jumbotron" style="padding: 0; background-color: white;">
-            <ul style="list-style-type: none;">
-            <li style="display: inline-block; width: 30%;">
-                <div class="card" style="border: none;">
-                    <div class="card-body">
-                        <h2 class="card-title" style="text-align: center; color: darkorange;">Registered Users</h2>
-                        <h3 class="card-title" style="text-align: center; "> <%= userSize %> </h3>
-                    </div>
-                </div>
-            </li>
-            <li style="display: inline-block; width: 30%;">
-                <div class="card" style="border: none;">
-                    <div class="card-body">
-                        <h2 class="card-title" style="text-align: center; color: darkorange;">Available Coupons</h2>
-                        <h3 class="card-title" style="text-align: center; "> <%=  couponCount %></h3>
-                    </div>
-                </div>
-            </li>
-            <li style="display: inline-block; width: 30%;">
-                <div class="card" style="border: none;">
-                    <div class="card-body">
-                        <h2 class="card-title" style="text-align: center; color: darkorange;">Total Exchange</h2>
-                        <h3 class="card-title" style="text-align: center; "> <%= coupoExchange %></h3>
-                    </div>
-                </div>
-            </li>
-        </ul>
+            <%if(!isAuthenticated || !user.isAdmin) {%>
+                <ul style="list-style-type: none;">
+                    <li style="display: inline-block; width: 30%;">
+                        <div class="card" style="border: none;">
+                            <div class="card-body">
+                                <h2 class="card-title" style="text-align: center; color: darkorange;">Registered Users</h2>
+                                <h3 class="card-title" style="text-align: center; "> <%= userSize %> </h3>
+                            </div>
+                        </div>
+                    </li>
+                    <li style="display: inline-block; width: 30%;">
+                        <div class="card" style="border: none;">
+                            <div class="card-body">
+                                <h2 class="card-title" style="text-align: center; color: darkorange;">Available Coupons</h2>
+                                <h3 class="card-title" style="text-align: center; "> <%=  couponCount %></h3>
+                            </div>
+                        </div>
+                    </li>
+                    <li style="display: inline-block; width: 30%;">
+                        <div class="card" style="border: none;">
+                            <div class="card-body">
+                                <h2 class="card-title" style="text-align: center; color: darkorange;">Total Exchange</h2>
+                                <h3 class="card-title" style="text-align: center; "> <%= coupoExchange %></h3>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            <%} else {%>
+                <ul style="list-style-type: none;">
+                    <li style="display: inline-block; width: 30%;">
+                        <div class="card" style="border: none;">
+                            <div class="card-body">
+                                <h2 class="card-title" style="text-align: center; color: darkorange;">Verified Coupons</h2>
+                                <h3 class="card-title" style="text-align: center; "> <%= totalVerifiedCoupons %> </h3>
+                            </div>
+                        </div>
+                    </li>
+                    <li style="display: inline-block; width: 30%;">
+                        <div class="card" style="border: none;">
+                            <div class="card-body">
+                                <h2 class="card-title" style="text-align: center; color: darkorange;">Pending Coupons</h2>
+                                <h3 class="card-title" style="text-align: center; "> <%=  totalPendingCoupons %></h3>
+                            </div>
+                        </div>
+                    </li>
+                    <li style="display: inline-block; width: 30%;">
+                        <div class="card" style="border: none;">
+                            <div class="card-body">
+                                <h2 class="card-title" style="text-align: center; color: darkorange;">Total Admins</h2>
+                                <h3 class="card-title" style="text-align: center; "> 3</h3>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            <%}%>
         </div>
     </div>
 	<div id="carousel" class="carousel slide carousel-fade" data-ride="carousel">
@@ -140,22 +185,25 @@
 		</div>
 	</div>
     
-    <div class="jumbotron" style="margin-bottom: 0; padding-top: 3%; padding-bottom: 0%; background-color: white;">
-        <ul style="list-style-type: none; margin-left: 10%; margin-right: 10%; padding-left: 0;">
-        <li style="display: inline-block; margin-left: 0; margin-bottom: 0; width: 85%;">
-        <div class="form-group">
-       <input list="companies" class="form-control" id="exampleFormControlInput1" placeholder="Select from vast number of online stores..." style="border-radius: 3%;">
-        <datalist id="companies">
-                <option>yyby</option>
-                <option>fyfyfy</option>
-        </datalist>
+    <form action = "/search" method="post">
+        <div class="jumbotron" style="margin-bottom: 0; padding-top: 3%; padding-bottom: 0%; background-color: white;">
+            <ul style="list-style-type: none; margin-left: 10%; margin-right: 10%; padding-left: 0;">
+            <li style="display: inline-block; margin-left: 0; margin-bottom: 0; width: 85%;">
+            <div class="form-group">
+            <input  type="text" class="form-control" name="search" id="searchId" placeholder="search........." required>
+                <datalist id="companies">
+                    <option>watch</option>
+                    <option>Tshirt</option>
+                    <option>Specs</option>
+            </datalist>
+            </div>
+            </li>
+            <li style="display: inline-block; width: 14;">
+            <button type="submit" class="btn btn-info" style="background-color: darkorange; display: inline-block; margin-bottom: 5px;">Submit</button>
+            </li>
+            </ul>
         </div>
-        </li>
-        <li style="display: inline-block; width: 14;">
-        <button type="submit" class="btn btn-info" style="background-color: darkorange; display: inline-block; margin-bottom: 5px;">Submit</button>
-        </li>
-        </ul>
-    </div>
+    </form>
     <div style="width:15%;  margin-left: 1.5%; margin-top: 1%; word-wrap:break-word; display: inline-block;">
         <form action="/filter" method="post">
             <div class="avlblstores" style="margin-bottom: 3%;">
@@ -227,22 +275,10 @@
        </div>
    </div></li> -->
           
-            <% if(!filtred) {%>
-                <% for(let i of COUPON) {%>
-                    <li style="display: inline-block; width:30%"><div class="card" style="width:100%; word-wrap: break-word; margin: 4%;">
-                        <div class="card-body" style="background-color: rgb(238, 135, 71); border-radius: 5px;">
-                            <h4 class="card-title" style="color: white;"><%= i.title %></h4>
-                            <h6 class="card-subtitle mb-2 text-muted"><%= i.store %></h6>
-                            <p class="card-text"><%=i.description%></p>
-                            <a href="/main/<%=i._id%>" class="card-link" style="color: rgb(219, 213, 213);" >Card link</a>
-                            <a href="#" class="card-link" style="color: rgb(219, 213, 213);">Another link</a>
-                        </div>
-                    </div></li>
-              <%}%>
-            <%} else {%>
-                 <%  for(let i of COUPON) {%>
-                    <%   for(let j of filteredCompany) { %>
-                        <%   if(i.store.toLowerCase() == j.toLowerCase()) { %>
+            <%if(!isSearched) {%>
+                <% if(!filtred) {%>
+                    <% for(let i of COUPON) {%>
+                        <%if(i.isVerified) {%>
                             <li style="display: inline-block; width:30%"><div class="card" style="width:100%; word-wrap: break-word; margin: 4%;">
                                 <div class="card-body" style="background-color: rgb(238, 135, 71); border-radius: 5px;">
                                     <h4 class="card-title" style="color: white;"><%= i.title %></h4>
@@ -252,9 +288,39 @@
                                     <a href="#" class="card-link" style="color: rgb(219, 213, 213);">Another link</a>
                                 </div>
                             </div></li>
-                           <%}%>
+                        <%}%>
+                  <%}%>
+                <%} else {%>
+                     <%  for(let i of COUPON) {%>
+                        <%   for(let j of filteredCompany) { %>
+                            <%   if(i.store.toLowerCase() == j.toLowerCase()) { %>
+                                <%if(i.isVerified) {%>
+                                    <li style="display: inline-block; width:30%"><div class="card" style="width:100%; word-wrap: break-word; margin: 4%;">
+                                        <div class="card-body" style="background-color: rgb(238, 135, 71); border-radius: 5px;">
+                                            <h4 class="card-title" style="color: white;"><%= i.title %></h4>
+                                            <h6 class="card-subtitle mb-2 text-muted"><%= i.store %></h6>
+                                            <p class="card-text"><%=i.description%></p>
+                                            <a href="/main/<%=i._id%>" class="card-link" style="color: rgb(219, 213, 213);" >Card link</a>
+                                            <a href="#" class="card-link" style="color: rgb(219, 213, 213);">Another link</a>
+                                        </div>
+                                    </div></li>
+                                <%}%>
+                               <%}%>
+                          <% } %>
                       <% } %>
-                  <% } %>
+                <%}%>
+            <%} else {%>
+                <%for(let i of matchedCoupon) {%>
+                    <li style="display: inline-block; width:30%"><div class="card" style="width:100%; word-wrap: break-word; margin: 4%;">
+                        <div class="card-body" style="background-color: rgb(238, 135, 71); border-radius: 5px;">
+                            <h4 class="card-title" style="color: white;"><%= i.title %></h4>
+                            <h6 class="card-subtitle mb-2 text-muted"><%= i.store %></h6>
+                            <p class="card-text"><%=i.description%></p>
+                            <a href="/main/<%=i._id%>" class="card-link" style="color: rgb(219, 213, 213);" >Card link</a>
+                            <a href="#" class="card-link" style="color: rgb(219, 213, 213);">Another link</a>
+                        </div>
+                    </div></li>
+                <%}%>
             <%}%>
 
 

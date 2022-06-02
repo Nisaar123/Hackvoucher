@@ -35,7 +35,16 @@ const UserSchema = new mongoose.Schema({
     is_profile_pic_uploaded : {
         type : Boolean,
         default : false
-    }
+    },
+    isAdmin : {
+        type : Boolean,
+        default : false
+    },
+    userInterest : [
+        {
+            type : String
+        }
+    ]
 }) ;
 const User = mongoose.model('User' , UserSchema) ;
 module.exports = User ;
