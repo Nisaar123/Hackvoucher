@@ -135,7 +135,7 @@ routes.post('/search', async (req, res) => {
    let userSize = await (await User.find()).length;
    var totalPendingCoupons = 0;
   for(let i = 0; i < data.length; i++) {
-    if(data[i].isVerified) {
+    if(!data[i].isVerified) {
         totalPendingCoupons = totalPendingCoupons + 1;
     }
   }
@@ -156,7 +156,7 @@ routes.post('/search', async (req, res) => {
         filtred: false,
         user : res.locals.user,
         totalPendingCoupons : totalPendingCoupons,
-        totalVerifiedCoupons : coupon.length - totalPendingCoupons,
+        totalVerifiedCoupons : data.length - totalPendingCoupons,
         totalAdmins : admins.length, 
         isSearched : true
     })
